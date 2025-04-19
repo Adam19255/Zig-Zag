@@ -6,6 +6,19 @@ public class PlayerScript : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private GameInput gameInput;
+    private Rigidbody rb;
+    private float customGravity = -100f;
+
+    // Start is called before the first frame update
+    void Start() {
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false; // Disable default gravity
+    }
+
+    private void FixedUpdate() {
+        // Apply custom gravity
+        rb.AddForce(Vector3.up * customGravity, ForceMode.Acceleration);
+    }
 
     // Update is called once per frame
     void Update()
