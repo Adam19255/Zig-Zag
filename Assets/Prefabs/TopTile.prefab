@@ -71,6 +71,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2143222552221504584}
+  - component: {fileID: 2111129567597575021}
+  - component: {fileID: -4547005186790123982}
   m_Layer: 0
   m_Name: TopTile
   m_TagString: Untagged
@@ -94,6 +96,39 @@ Transform:
   - {fileID: 1866075990587376374}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2111129567597575021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656030277995299896}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.9237003, y: 3, z: 3.611104}
+  m_Center: {x: 0, y: 3, z: 1.5}
+--- !u!114 &-4547005186790123982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656030277995299896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123c25831a9ca7b4cbfebc1d21116789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2766883310439404715
 GameObject:
   m_ObjectHideFlags: 0

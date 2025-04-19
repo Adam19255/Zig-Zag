@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 714029710}
   m_Layer: 0
   m_Name: PlayerVisual
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -263,10 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc4c7a0aa857c8479b7ba93cd9deb9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftTilePrefab: {fileID: 8704992597838201645, guid: fbe3631dde8dfa741898c3b26b4c53dd,
-    type: 3}
-  topTilePrefab: {fileID: 2656030277995299896, guid: 0094ca48bef0c69479ee27e6144b8dd7,
-    type: 3}
+  tilePrefabs:
+  - {fileID: 8704992597838201645, guid: fbe3631dde8dfa741898c3b26b4c53dd, type: 3}
+  - {fileID: 2656030277995299896, guid: 0094ca48bef0c69479ee27e6144b8dd7, type: 3}
   currentTile: {fileID: 732913050}
 --- !u!4 &853510114
 Transform:
@@ -418,7 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86f01edd31715894b878ca8923f1a7ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 15
   gameInput: {fileID: 2120368425}
 --- !u!4 &1234417624
 Transform:
