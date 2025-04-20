@@ -21,11 +21,23 @@ public class PlayerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         // Get the input from the GameInput class
         Vector3 moveDir = gameInput.GetMovementVector();
         float moveAmount = speed * Time.deltaTime;
         transform.Translate(moveDir * moveAmount);
+
+        // Get the first child of the player object
+        Transform child = transform.GetChild(0);
+        if (child != null) {
+
+            // Rotate the player based on the movement direction
+            if (moveDir == Vector3.forward) {
+                child.Rotate(Vector3.left, -270f * Time.deltaTime);
+            }
+            else if (moveDir == Vector3.left) {
+                child.Rotate(Vector3.forward, -270f * Time.deltaTime);
+            }
+        }
     }
 }
