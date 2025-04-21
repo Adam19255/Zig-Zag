@@ -12,6 +12,8 @@ public class TileManager : MonoBehaviour
     private Stack<GameObject> leftTiles = new Stack<GameObject>();
     private Stack<GameObject> topTiles = new Stack<GameObject>();
     private Stack<GameObject> startTiles = new Stack<GameObject>();
+    private int leftTileCount = 0;
+    private int topTileCount = 0;
 
 
     public static TileManager Instance {
@@ -41,12 +43,12 @@ public class TileManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddTiles(100);
+        AddTiles(50);
 
         // Add the startTile to the stack
         startTiles.Push(startTile);
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 25; i++) {
             CreateTiles();
         }
     }
@@ -67,17 +69,30 @@ public class TileManager : MonoBehaviour
             AddTiles(10);
         }
         int randomIndex = Random.Range(0, tilePrefabs.Length);
+
+        // Make sure there isn't a chance for more than 10 times of the same tile
+        if (leftTileCount > 9) {
+            randomIndex = 1;
+            leftTileCount = 0;
+        }
+        else if (topTileCount > 9) {
+            randomIndex = 0;
+            topTileCount = 0;
+        }
+
         if (randomIndex == 0) {
             GameObject newTile = leftTiles.Pop();
             newTile.SetActive(true);
             newTile.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
             currentTile = newTile;
+            leftTileCount++;
         }
         else if (randomIndex == 1) {
             GameObject newTile = topTiles.Pop();
             newTile.SetActive(true);
             newTile.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
             currentTile = newTile;
+            topTileCount++;
         }
     }
 }
