@@ -8,6 +8,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     private Rigidbody rb;
     private float customGravity = -100f;
+    private Vector3 previousMoveDir = Vector3.zero; // Store the previous move direction
+    private bool changeDirection = false; // Track if the direction has changed
+
 
     // Start is called before the first frame update
     void Start() {
@@ -25,6 +28,18 @@ public class PlayerScript : MonoBehaviour
         // Get the input from the GameInput class
         Vector3 moveDir = gameInput.GetMovementVector();
         float moveAmount = speed * Time.deltaTime;
+
+        // Check if the move direction has changed
+        if (moveDir != previousMoveDir) {
+            changeDirection = true;
+        }
+        else {
+            changeDirection = false;
+        }
+        // Update the previous move direction
+        previousMoveDir = moveDir;
+
+        // Move the player
         transform.Translate(moveDir * moveAmount);
 
         // Get the first child of the player object
@@ -33,10 +48,18 @@ public class PlayerScript : MonoBehaviour
 
             // Rotate the player based on the movement direction
             if (moveDir == Vector3.forward) {
+                if (changeDirection) {
+                    // Reset rotation if direction changed
+                    child.rotation = Quaternion.identity;
+                }
                 child.Rotate(Vector3.left, -270f * Time.deltaTime);
             }
             else if (moveDir == Vector3.left) {
-                child.Rotate(Vector3.forward, -270f * Time.deltaTime);
+                if (changeDirection) {
+                    // Reset rotation if direction changed
+                    child.rotation = Quaternion.identity;
+                }
+                child.Rotate(Vector3.forward, 270f * Time.deltaTime);
             }
         }
     }

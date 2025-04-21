@@ -527,6 +527,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6608921286487523626, guid: 9ed747b0271be6b42ad2ef8e5a09748a,
         type: 3}
+      propertyPath: rotateX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608921286487523626, guid: 9ed747b0271be6b42ad2ef8e5a09748a,
+        type: 3}
       propertyPath: gameInput
       value: 
       objectReference: {fileID: 2120368425}
