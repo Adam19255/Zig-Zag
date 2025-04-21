@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour
     private float customGravity = -100f;
     private Vector3 previousMoveDir = Vector3.zero; // Store the previous move direction
     private bool changeDirection = false; // Track if the direction has changed
+    [SerializeField] private GameObject particles;
 
 
     // Start is called before the first frame update
@@ -61,6 +62,16 @@ public class PlayerScript : MonoBehaviour
                 }
                 child.Rotate(Vector3.forward, 270f * Time.deltaTime);
             }
+        }
+    }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Gem")) {
+            other.gameObject.SetActive(false);
+            // Instantiate the particle effect at the player's position
+            GameObject particleEffect = Instantiate(particles, transform.position, Quaternion.identity);
+            // Destroy the particle effect after 3 second
+            Destroy(particleEffect, 3f);
         }
     }
 }

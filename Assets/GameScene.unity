@@ -560,6 +560,12 @@ PrefabInstance:
       propertyPath: gameInput
       value: 
       objectReference: {fileID: 2120368425}
+    - target: {fileID: 6608921286487523626, guid: 9ed747b0271be6b42ad2ef8e5a09748a,
+        type: 3}
+      propertyPath: particles
+      value: 
+      objectReference: {fileID: 2781517520818888314, guid: 7a713a45ec2d4074c9493e550ef782e6,
+        type: 3}
     - target: {fileID: 8512923848566134672, guid: 9ed747b0271be6b42ad2ef8e5a09748a,
         type: 3}
       propertyPath: m_LocalPosition.x

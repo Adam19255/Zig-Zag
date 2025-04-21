@@ -94,5 +94,11 @@ public class TileManager : MonoBehaviour
             currentTile = newTile;
             topTileCount++;
         }
+
+        // Create tiles with gems on it
+        int createGem = Random.Range(0, 7);
+        if (createGem == 0) {
+            currentTile.transform.GetChild(1).gameObject.SetActive(true);
+        }
     }
 }
