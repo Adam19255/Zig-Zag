@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject particles;
     [SerializeField] private Transform mainCamera;
+    [SerializeField] private GameObject resetButton;
 
     private Rigidbody rb;
     private float customGravity = -100f;
@@ -98,7 +99,20 @@ public class PlayerScript : MonoBehaviour
                 if (mainCamera != null) {
                     mainCamera.parent = null; // Detach the camera from the player
                 }
+                // Start coroutine to show reset button after 1 second
+                StartCoroutine(ShowResetButtonAfterDelay(1f));
             }
+        }
+    }
+
+    // Coroutine to show the reset button after a delay
+    private IEnumerator ShowResetButtonAfterDelay(float delay) {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+
+        // Show the reset button
+        if (resetButton != null) {
+            resetButton.SetActive(true);
         }
     }
 }

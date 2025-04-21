@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TileManager : MonoBehaviour
 {
@@ -100,5 +101,10 @@ public class TileManager : MonoBehaviour
         if (createGem == 0) {
             currentTile.transform.GetChild(1).gameObject.SetActive(true);
         }
+    }
+
+    public void ResetGame() {
+        // Reload the current scene
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 }
