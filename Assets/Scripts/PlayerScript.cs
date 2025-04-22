@@ -94,15 +94,27 @@ public class PlayerScript : MonoBehaviour
             float rayLength = 5f;
 
             if (!Physics.Raycast(rayStart, Vector3.down, out hit, rayLength)) {
-                isDead = true;
-                // Stop the camera from following the player
-                if (mainCamera != null) {
-                    mainCamera.parent = null; // Detach the camera from the player
-                }
-                // Start coroutine to show reset button after 1 second
-                StartCoroutine(ShowResetButtonAfterDelay(1f));
+                // Start coroutine to handle the death logic with a delay
+                StartCoroutine(HandlePlayerDeath());
             }
         }
+    }
+
+    // Coroutine to handle the player's death with a delay
+    private IEnumerator HandlePlayerDeath() {
+        // Wait for 0.1 seconds
+        yield return new WaitForSeconds(0.1f);
+
+        // Mark the player as dead
+        isDead = true;
+
+        // Stop the camera from following the player
+        if (mainCamera != null) {
+            mainCamera.parent = null; // Detach the camera from the player
+        }
+
+        // Start coroutine to show reset button after 1 second
+        StartCoroutine(ShowResetButtonAfterDelay(1f));
     }
 
     // Coroutine to show the reset button after a delay
