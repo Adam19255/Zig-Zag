@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInput : MonoBehaviour
-{
+public class GameInput : MonoBehaviour{
     private Vector3 moveDir;
 
     public Vector3 GetMovementVector() {

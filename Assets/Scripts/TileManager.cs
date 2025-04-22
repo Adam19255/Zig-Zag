@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TileManager : MonoBehaviour
-{
+public class TileManager : MonoBehaviour{
 
     [SerializeField] private GameObject[] tilePrefabs;
     [SerializeField] private GameObject currentTile;
     [SerializeField] private GameObject startTile;
-    private static TileManager instance;
+
     private Stack<GameObject> leftTiles = new Stack<GameObject>();
     private Stack<GameObject> topTiles = new Stack<GameObject>();
     private Stack<GameObject> startTiles = new Stack<GameObject>();
+
+    private static TileManager instance;
     private int leftTileCount = 0;
     private int topTileCount = 0;
 
@@ -54,6 +55,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    // Function to add tiles to the stack to recycle them
     public void AddTiles(int amount) {
         for (int i = 0; i < amount; i++) {
             leftTiles.Push(Instantiate(tilePrefabs[0]));
@@ -81,6 +83,7 @@ public class TileManager : MonoBehaviour
             topTileCount = 0;
         }
 
+        // Create left and top tiles
         if (randomIndex == 0) {
             GameObject newTile = leftTiles.Pop();
             newTile.SetActive(true);

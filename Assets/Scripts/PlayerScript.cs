@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerScript : MonoBehaviour
-{
+public class PlayerScript : MonoBehaviour{
     [SerializeField] private float speed = 15f;
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private GameObject particles;
     [SerializeField] private Transform mainCamera;
     [SerializeField] private GameObject resetButton;
     [SerializeField] private Text scoreText;
@@ -52,7 +50,7 @@ public class PlayerScript : MonoBehaviour
                 scoreText.text = score.ToString();
             }
             // Update player speed
-            if (score % 50 == 0) {
+            if (score % 50 == 0 && speed < 25) {
                 speed += 0.75f; // Increase speed every 50 points
             }
             }
@@ -90,8 +88,6 @@ public class PlayerScript : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Gem")) {
             other.gameObject.SetActive(false);
-            //// Instantiate the particle effect at the player's position
-            //GameObject particleEffect = Instantiate(particles, transform.position, Quaternion.identity);
             // Instantiate floating text at the player's position
             if (floatingTextPrefab) {
                 GameObject floatingText = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
@@ -102,8 +98,6 @@ public class PlayerScript : MonoBehaviour
             if (scoreText != null) {
                 scoreText.text = score.ToString();
             }
-            //// Destroy the particle effect after 3 second
-            //Destroy(particleEffect, 3f);
         }
     }
 

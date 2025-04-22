@@ -15,7 +15,7 @@ public class GemsAnimation : MonoBehaviour {
                 rotateY ? 1 : 0,
                 rotateZ ? 1 : 0
             );
-            transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
+            transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime); // Rotate the object
         }
     }
 }

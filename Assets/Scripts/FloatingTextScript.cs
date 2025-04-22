@@ -28,7 +28,7 @@ public class FloatingTextScript : MonoBehaviour {
         if (textMeshPro != null) {
             Color color = textMeshPro.color;
             while (color.a > 0) {
-                color.a -= Time.deltaTime / destroyTime; // Gradually reduce alpha
+                color.a -= Time.deltaTime / destroyTime; // Gradually reduce opacity
                 textMeshPro.color = color;
                 yield return null;
             }

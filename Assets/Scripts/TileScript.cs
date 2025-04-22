@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileScript : MonoBehaviour
-{
+public class TileScript : MonoBehaviour{
     private float fallDelay = 0.8f;
 
+    // Make the tile fall after we have passed it
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("Player")) {
             TileManager.Instance.CreateTiles();
