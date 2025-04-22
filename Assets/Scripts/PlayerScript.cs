@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 15f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject particles;
     [SerializeField] private Transform mainCamera;
@@ -19,9 +19,6 @@ public class PlayerScript : MonoBehaviour
     private bool changeDirection = false; // Track if the direction has changed
     private bool isDead;
     private int score = 0; // Initialize score to 0
-    private int gemsCollected = 0; // Initialize gems collected to 0
-    
-
 
     // Start is called before the first frame update
     void Start() {
@@ -54,7 +51,11 @@ public class PlayerScript : MonoBehaviour
             if (scoreText != null) {
                 scoreText.text = score.ToString();
             }
-        }
+            // Update player speed
+            if (score % 50 == 0) {
+                speed += 0.75f; // Increase speed every 50 points
+            }
+            }
         else {
             changeDirection = false;
         }
