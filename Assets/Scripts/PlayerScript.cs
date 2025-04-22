@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -9,12 +10,17 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private GameObject particles;
     [SerializeField] private Transform mainCamera;
     [SerializeField] private GameObject resetButton;
+    [SerializeField] private Text scoreText;
+    [SerializeField] private GameObject floatingTextPrefab;
 
     private Rigidbody rb;
     private float customGravity = -100f;
     private Vector3 previousMoveDir = Vector3.zero; // Store the previous move direction
     private bool changeDirection = false; // Track if the direction has changed
     private bool isDead;
+    private int score = 0; // Initialize score to 0
+    private int gemsCollected = 0; // Initialize gems collected to 0
+    
 
 
     // Start is called before the first frame update
@@ -42,6 +48,12 @@ public class PlayerScript : MonoBehaviour
         // Check if the move direction has changed
         if (moveDir != previousMoveDir) {
             changeDirection = true;
+            // Update the score
+            score++;
+            // Update the score text
+            if (scoreText != null) {
+                scoreText.text = score.ToString();
+            }
         }
         else {
             changeDirection = false;
@@ -77,10 +89,20 @@ public class PlayerScript : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Gem")) {
             other.gameObject.SetActive(false);
-            // Instantiate the particle effect at the player's position
-            GameObject particleEffect = Instantiate(particles, transform.position, Quaternion.identity);
-            // Destroy the particle effect after 3 second
-            Destroy(particleEffect, 3f);
+            //// Instantiate the particle effect at the player's position
+            //GameObject particleEffect = Instantiate(particles, transform.position, Quaternion.identity);
+            // Instantiate floating text at the player's position
+            if (floatingTextPrefab) {
+                GameObject floatingText = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
+            }
+            // Update the score for collecting a gem
+            score += 2;
+            // Update the score text
+            if (scoreText != null) {
+                scoreText.text = score.ToString();
+            }
+            //// Destroy the particle effect after 3 second
+            //Destroy(particleEffect, 3f);
         }
     }
 
