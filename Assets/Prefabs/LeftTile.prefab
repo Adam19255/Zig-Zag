@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: -8854925628698714972}
   - component: {fileID: 290042522569560141}
   - component: {fileID: -1085341400307360722}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LeftTile
   m_TagString: Tile
   m_Icon: {fileID: 0}

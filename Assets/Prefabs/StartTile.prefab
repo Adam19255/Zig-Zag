@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 7401129557394413171}
   - component: {fileID: 4767168727843379416}
   - component: {fileID: 2968879623458126264}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StartTile
   m_TagString: StartTile
   m_Icon: {fileID: 0}

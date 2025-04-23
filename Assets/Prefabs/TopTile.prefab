@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 2111129567597575021}
   - component: {fileID: -4547005186790123982}
   - component: {fileID: 8625038204032899704}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopTile
   m_TagString: Tile
   m_Icon: {fileID: 0}
