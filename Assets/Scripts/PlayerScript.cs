@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,20 @@ public class PlayerScript : MonoBehaviour{
     private bool changeDirection = false; // Track if the direction has changed
     private int score = 0; // Initialize score to 0
     private float rotationSpeed = 20f; // Speed of rotation for the player visuals
+    private bool isDead = false; // Track if the player is dead
+
+    public event EventHandler OnPlayerMovement;
+    public event EventHandler OnPlayerDeath;
+    public event EventHandler OnGemPickup;
+
+    public static PlayerScript Instance { get; private set; }
+
+    void Awake() {
+        // Ensure only one instance of PlayerScript exists
+        if (Instance == null) {
+            Instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -52,6 +67,7 @@ public class PlayerScript : MonoBehaviour{
         // Check if the move direction has changed
         if (moveDir != previousMoveDir) {
             changeDirection = true;
+            OnPlayerMovement?.Invoke(this, EventArgs.Empty);
             // Update the score
             score++;
             // Update the score text
@@ -103,6 +119,7 @@ public class PlayerScript : MonoBehaviour{
             }
             // Update the score for collecting a gem
             score += 2;
+            OnGemPickup?.Invoke(this, EventArgs.Empty);
             // Update the score text
             if (scoreText != null) {
                 scoreText.text = score.ToString();
@@ -116,6 +133,10 @@ public class PlayerScript : MonoBehaviour{
             if (collider.gameObject != gameObject) { // Ignore the player itself
                 return true; // Player is grounded
             }
+        }
+        if (!isDead) {
+            isDead = true; // Set isDead to true if the player is not grounded
+            OnPlayerDeath?.Invoke(this, EventArgs.Empty);
         }
         return false; // Player is not grounded
     }
