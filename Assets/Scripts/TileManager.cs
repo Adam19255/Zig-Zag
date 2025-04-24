@@ -45,12 +45,12 @@ public class TileManager : MonoBehaviour{
     // Start is called before the first frame update
     void Start()
     {
-        AddTiles(50);
+        AddTiles(50); // Add 50 tiles to the stack
 
         // Add the startTile to the stack
         startTiles.Push(startTile);
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 25; i++) { // Create 25 tiles at the start
             CreateTiles();
         }
     }
@@ -60,16 +60,16 @@ public class TileManager : MonoBehaviour{
         for (int i = 0; i < amount; i++) {
             leftTiles.Push(Instantiate(tilePrefabs[0]));
             topTiles.Push(Instantiate(tilePrefabs[1]));
-            leftTiles.Peek().name = "LeftTile";
-            leftTiles.Peek().SetActive(false);
+            leftTiles.Peek().name = "LeftTile"; // Set the name of the tile to "LeftTile" in the stack
+            leftTiles.Peek().SetActive(false); // Deactivate the tile so it doesn't appear in the scene
             topTiles.Peek().name = "TopTile";
             topTiles.Peek().SetActive(false);
         }
     }
 
     public void CreateTiles() {
-        if (leftTiles.Count == 0 || topTiles.Count == 0) {
-            AddTiles(10);
+        if (leftTiles.Count == 0 || topTiles.Count == 0) { // Check if the stacks are empty
+            AddTiles(10); // Add more tiles if the stacks are empty
         }
         int randomIndex = Random.Range(0, tilePrefabs.Length);
 
