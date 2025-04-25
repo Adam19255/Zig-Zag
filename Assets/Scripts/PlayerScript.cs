@@ -13,9 +13,8 @@ public class PlayerScript : MonoBehaviour{
     [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private LayerMask whatIsGround; // Layer mask for ground detection for the player
     [SerializeField] private Transform contactPoint; // Reference to the contact point for the player
+    [SerializeField] private GameObject spotLight; // Reference to the spotlight for the player
 
-    private Rigidbody rb;
-    private float customGravity = -100f;
     private Vector3 previousMoveDir = Vector3.zero; // Store the previous move direction
     private bool changeDirection = false; // Track if the direction has changed
     private int score = 0; // Initialize score to 0
@@ -35,23 +34,16 @@ public class PlayerScript : MonoBehaviour{
         }
     }
 
-    // Start is called before the first frame update
-    void Start() {
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = false; // Disable default gravity
-    }
-
-    private void FixedUpdate() {
-        // Apply custom gravity
-        rb.AddForce(Vector3.up * customGravity, ForceMode.Acceleration);
-    }
-
     // Update is called once per frame
     void Update() {
         if (!IsGrounded()) {
             // Stop the camera from following the player
             if (mainCamera != null) {
                 mainCamera.parent = null; // Detach the camera from the player
+            }
+            // Stop the spotlight from following the player
+            if (spotLight != null) {
+                spotLight.transform.parent = null; // Detach the spotlight from the player
             }
             // Show the reset button
             if (resetButton != null) {
