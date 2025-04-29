@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour{
     [SerializeField] private LayerMask whatIsGround; // Layer mask for ground detection for the player
     [SerializeField] private Transform contactPoint; // Reference to the contact point for the player
     [SerializeField] private GameObject spotLight; // Reference to the spotlight for the player
+    [SerializeField] private GameOverScript gameOverScript; // Reference to the GameOverScript
 
     private Vector3 previousMoveDir = Vector3.zero; // Store the previous move direction
     private bool changeDirection = false; // Track if the direction has changed
@@ -129,7 +130,17 @@ public class PlayerScript : MonoBehaviour{
         if (!isDead) {
             isDead = true; // Set isDead to true if the player is not grounded
             OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+            // Trigger the game over animation via GameOverScript
+            if (gameOverScript != null) {
+                gameOverScript.TriggerGameOverAnimation();
+                gameOverScript.UpdateScore(GetScore());
+            }
         }
         return false; // Player is not grounded
     }
+
+    public int GetScore() {
+        return score;
+    }
+
 }
