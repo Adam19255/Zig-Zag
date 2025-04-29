@@ -8,7 +8,6 @@ public class PlayerScript : MonoBehaviour{
     [SerializeField] private float speed = 15f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Transform mainCamera;
-    [SerializeField] private GameObject resetButton;
     [SerializeField] private Text scoreText;
     [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private LayerMask whatIsGround; // Layer mask for ground detection for the player
@@ -45,10 +44,6 @@ public class PlayerScript : MonoBehaviour{
             // Stop the spotlight from following the player
             if (spotLight != null) {
                 spotLight.transform.parent = null; // Detach the spotlight from the player
-            }
-            // Show the reset button
-            if (resetButton != null) {
-                resetButton.SetActive(true);
             }
             return; // Exit the update method if the player is not grounded
         }
