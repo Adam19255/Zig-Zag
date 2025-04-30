@@ -9,6 +9,17 @@ public class GameOverScript : MonoBehaviour
     [SerializeField] private Text newHighScore;
     [SerializeField] private Image backGround;
     [SerializeField] private Text[] scoreTexts;
+    [SerializeField] private Button mainMenuButton;
+
+
+    private void Awake() {
+        // Set the main menu button listener
+        if (mainMenuButton != null) {
+            mainMenuButton.onClick.AddListener(() => {
+                Loader.Load(Loader.Scene.MainMenuScene);
+            });
+        }
+    }
 
     public void TriggerGameOverAnimation() {
         if (gameOverAnimator != null) {
