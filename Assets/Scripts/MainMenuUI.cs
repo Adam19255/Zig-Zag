@@ -14,10 +14,16 @@ public class MainMenuUI : MonoBehaviour
     private void Awake() {
         playButton.onClick.AddListener(() => {
             // Load the game scene
-            SceneManager.LoadScene("GameScene");
+            Loader.Load(Loader.Scene.GameScene);
         });
-        //shopButton.onClick.AddListener(OnShopButtonClicked);
-        //settingsButton.onClick.AddListener(OnSettingsButtonClicked);
+        shopButton.onClick.AddListener(() => {
+            // Load the shop scene
+            Loader.Load(Loader.Scene.ShopScene);
+        });
+        settingsButton.onClick.AddListener(() => {
+            // Load the settings scene
+            Loader.Load(Loader.Scene.SettingsScene);
+        });
         quitButton.onClick.AddListener(() => {
             // Quit the game
             Application.Quit();
