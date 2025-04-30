@@ -10,15 +10,29 @@ public class GameOverScript : MonoBehaviour
     [SerializeField] private Image backGround;
     [SerializeField] private Text[] scoreTexts;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private float sceneLoadDelay = 0.2f;
 
 
     private void Awake() {
         // Set the main menu button listener
-        if (mainMenuButton != null) {
-            mainMenuButton.onClick.AddListener(() => {
-                Loader.Load(Loader.Scene.MainMenuScene);
-            });
-        }
+        mainMenuButton.onClick.AddListener(() => {
+            StartCoroutine(LoadSceneWithDelay(Loader.Scene.MainMenuScene));
+        });
+
+        // Set the restart button listener
+        restartButton.onClick.AddListener(() => {
+            StartCoroutine(LoadSceneWithDelay(Loader.Scene.GameScene));
+        });
+    }
+
+    private IEnumerator LoadSceneWithDelay(Loader.Scene scene) {
+        // Play the button click sound
+        SoundManager.Instance.ButtonClickSound();
+        // Wait for the sound to finish
+        yield return new WaitForSeconds(sceneLoadDelay);
+        // Load the scene
+        Loader.Load(scene);
     }
 
     public void TriggerGameOverAnimation() {

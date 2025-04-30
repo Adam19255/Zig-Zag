@@ -5,12 +5,25 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager Instance { get; private set; } // Singleton instance
 
     [SerializeField] private AudioClip playerMovement;
     [SerializeField] private AudioClip playerDeath;
     [SerializeField] private AudioClip gemPickup;
+    [SerializeField] private AudioClip buttonClick;
 
-    private void Start() {
+    private void Awake() {
+        // Set this as the singleton instance
+        Instance = this;
+    }
+
+    private IEnumerator Start() {
+        // Wait until PlayerScript.Instance is initialized
+        while (PlayerScript.Instance == null) {
+            yield return null; // Wait for the next frame
+        }
+
+        // Subscribe to PlayerScript events
         PlayerScript.Instance.OnPlayerMovement += PlayerScript_OnPlayerMovement;
         PlayerScript.Instance.OnPlayerDeath += PlayerScript_OnPlayerDeath;
         PlayerScript.Instance.OnGemPickup += PlayerScript_OnGemPickup;
@@ -40,6 +53,10 @@ public class SoundManager : MonoBehaviour
 
     private void PlayerScript_OnGemPickup(object sender, EventArgs e) {
         PlaySound(gemPickup, PlayerScript.Instance.transform.position);
+    }
+
+    public void ButtonClickSound() {
+        PlaySound(buttonClick, Vector3.zero);
     }
 
     private void PlaySound(AudioClip audioClip, Vector3 position, float volume = 1f) {

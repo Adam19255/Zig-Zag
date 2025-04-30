@@ -1,32 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenuUI : MonoBehaviour
-{
+public class MainMenuUI : MonoBehaviour {
     [SerializeField] private Button playButton;
     [SerializeField] private Button shopButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private float sceneLoadDelay = 0.2f;
 
     private void Awake() {
-        playButton.onClick.AddListener(() => {
-            // Load the game scene
-            Loader.Load(Loader.Scene.GameScene);
-        });
-        shopButton.onClick.AddListener(() => {
-            // Load the shop scene
-            Loader.Load(Loader.Scene.ShopScene);
-        });
-        settingsButton.onClick.AddListener(() => {
-            // Load the settings scene
-            Loader.Load(Loader.Scene.SettingsScene);
-        });
+        playButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.GameScene)));
+        shopButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.ShopScene)));
+        settingsButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.SettingsScene)));
         quitButton.onClick.AddListener(() => {
-            // Quit the game
+            SoundManager.Instance.ButtonClickSound(); // Play the sound
             Application.Quit();
         });
+    }
+
+    private IEnumerator LoadSceneWithDelay(Loader.Scene scene) {
+        // Play the button click sound
+        SoundManager.Instance.ButtonClickSound();
+        // Wait for the sound to finish
+        yield return new WaitForSeconds(sceneLoadDelay);
+        // Load the scene
+        Loader.Load(scene);
     }
 }
