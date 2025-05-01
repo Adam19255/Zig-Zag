@@ -20,10 +20,12 @@ public class PlayerScript : MonoBehaviour{
     private int score = 0; // Initialize score to 0
     private float rotationSpeed = 20f; // Speed of rotation for the player visuals
     private bool isDead = false; // Track if the player is dead
+    private bool isGameStarted = false; // Track if the game has started
 
     public event EventHandler OnPlayerMovement;
     public event EventHandler OnPlayerDeath;
     public event EventHandler OnGemPickup;
+    public event EventHandler OnGameStart;
 
     public static PlayerScript Instance { get; private set; }
 
@@ -36,6 +38,7 @@ public class PlayerScript : MonoBehaviour{
 
     // Update is called once per frame
     void Update() {
+        // Check if the player is dead
         if (!IsGrounded()) {
             // Stop the camera from following the player
             if (mainCamera != null) {
@@ -55,6 +58,11 @@ public class PlayerScript : MonoBehaviour{
         // Check if the move direction has changed
         if (moveDir != previousMoveDir) {
             changeDirection = true;
+            // Check if the game has started
+            if (!isGameStarted) {
+                isGameStarted = true; // Set the game as started
+                OnGameStart?.Invoke(this, EventArgs.Empty);
+            }
             OnPlayerMovement?.Invoke(this, EventArgs.Empty);
             // Update the score
             score++;

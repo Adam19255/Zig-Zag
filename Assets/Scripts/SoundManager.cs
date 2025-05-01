@@ -27,6 +27,11 @@ public class SoundManager : MonoBehaviour
         PlayerScript.Instance.OnPlayerMovement += PlayerScript_OnPlayerMovement;
         PlayerScript.Instance.OnPlayerDeath += PlayerScript_OnPlayerDeath;
         PlayerScript.Instance.OnGemPickup += PlayerScript_OnGemPickup;
+        PlayerScript.Instance.OnGameStart += PlayerScript_OnGameStart;
+    }
+
+    private void PlayerScript_OnGameStart(object sender, EventArgs e) {
+        PlaySound(buttonClick, PlayerScript.Instance.transform.position);
     }
 
     private void PlayerScript_OnPlayerMovement(object sender, EventArgs e) {
