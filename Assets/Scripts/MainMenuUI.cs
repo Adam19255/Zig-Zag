@@ -12,7 +12,10 @@ public class MainMenuUI : MonoBehaviour {
 
     private void Awake() {
         playButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.GameScene)));
-        shopButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.ShopScene)));
+        shopButton.onClick.AddListener(() => {
+            SoundManager.Instance.ButtonClickSound(); // Play the sound
+            ShopUI.Instance.Show(); // Show the shop UI
+        });
         settingsButton.onClick.AddListener(() => {
             SoundManager.Instance.ButtonClickSound(); // Play the sound
             SettingsUI.Instance.Show(); // Show the settings UI

@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopUI : MonoBehaviour
-{
-    [SerializeField] private Button mainMenuButton;
-    [SerializeField] private float sceneLoadDelay = 0.2f;
+public class ShopUI : MonoBehaviour {
+    public static ShopUI Instance { get; private set; } // Singleton instance
+
+    [SerializeField] private Button backButton; // Reference to the back button
 
     private void Awake() {
-        // Set the main menu button listener
-        mainMenuButton.onClick.AddListener(() => {
-            StartCoroutine(LoadSceneWithDelay(Loader.Scene.MainMenuScene));
+        Instance = this; // Set the singleton instance
+        backButton.onClick.AddListener(() => {
+            SoundManager.Instance.ButtonClickSound(); // Play the sound
+            Hide(); // Hide the shop UI
         });
     }
 
-    private IEnumerator LoadSceneWithDelay(Loader.Scene scene) {
-        // Play the button click sound
-        SoundManager.Instance.ButtonClickSound();
-        // Wait for the sound to finish
-        yield return new WaitForSeconds(sceneLoadDelay);
-        // Load the scene
-        Loader.Load(scene);
+    private void Start() {
+        Hide(); // Hide the shop UI by default
+    }
+
+    public void Show() {
+        gameObject.SetActive(true); // Show the shop UI
+    }
+
+    public void Hide() {
+        gameObject.SetActive(false); // Hide the shop UI
     }
 }
