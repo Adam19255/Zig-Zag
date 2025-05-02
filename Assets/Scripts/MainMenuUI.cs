@@ -13,7 +13,10 @@ public class MainMenuUI : MonoBehaviour {
     private void Awake() {
         playButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.GameScene)));
         shopButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.ShopScene)));
-        settingsButton.onClick.AddListener(() => StartCoroutine(LoadSceneWithDelay(Loader.Scene.SettingsScene)));
+        settingsButton.onClick.AddListener(() => {
+            SoundManager.Instance.ButtonClickSound(); // Play the sound
+            SettingsUI.Instance.Show(); // Show the settings UI
+        });
         quitButton.onClick.AddListener(() => {
             SoundManager.Instance.ButtonClickSound(); // Play the sound
             Application.Quit();

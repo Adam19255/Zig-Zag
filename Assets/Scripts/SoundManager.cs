@@ -12,9 +12,14 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip gemPickup;
     [SerializeField] private AudioClip buttonClick;
 
+    private float volume = 1f; // Default volume
+
     private void Awake() {
         // Set this as the singleton instance
         Instance = this;
+
+        // Load the volume from PlayerPrefs
+        volume = PlayerPrefs.GetFloat("Volume", 1f); // Default volume is 1 if not set
     }
 
     private IEnumerator Start() {
@@ -44,7 +49,7 @@ public class SoundManager : MonoBehaviour
         if (firstChild != null) {
             AudioSource audioSource = firstChild.GetComponent<AudioSource>();
             if (audioSource != null) {
-                audioSource.PlayOneShot(playerDeath);
+                audioSource.PlayOneShot(playerDeath, volume);
             }
             else {
                 Debug.LogWarning("AudioSource not found on playerVisual!");
@@ -64,7 +69,22 @@ public class SoundManager : MonoBehaviour
         PlaySound(buttonClick, Vector3.zero);
     }
 
-    private void PlaySound(AudioClip audioClip, Vector3 position, float volume = 1f) {
-        AudioSource.PlayClipAtPoint(audioClip, position, volume);
+    private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplier = 1f) {
+        AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
+    }
+
+    public void ChangeVolume() {
+        volume += 0.1f; // Increase volume by 0.1
+        if (volume > 1f) {
+            volume = 0f; // Reset volume to 0 if it exceeds 1
+        }
+
+        // Save the volume to PlayerPrefs
+        PlayerPrefs.SetFloat("Volume", volume);
+        PlayerPrefs.Save(); // Save the changes
+    }
+
+    public float GetVolume() {
+        return volume; // Return the current volume
     }
 }

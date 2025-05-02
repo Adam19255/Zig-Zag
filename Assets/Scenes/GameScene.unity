@@ -2069,6 +2069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverAnimator: {fileID: 1916995065}
+  highScoreText: {fileID: 1936063221}
   newHighScore: {fileID: 95138147}
   backGround: {fileID: 441069258}
   scoreTexts:

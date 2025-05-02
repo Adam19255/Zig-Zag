@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameOverScript : MonoBehaviour
 {
     [SerializeField] private Animator gameOverAnimator; // Reference to the GameOver animator
+    [SerializeField] private Text highScoreText; // Reference to the high score text
     [SerializeField] private Text newHighScore;
     [SerializeField] private Image backGround;
     [SerializeField] private Text[] scoreTexts;
@@ -24,6 +25,8 @@ public class GameOverScript : MonoBehaviour
         restartButton.onClick.AddListener(() => {
             StartCoroutine(LoadSceneWithDelay(Loader.Scene.GameScene));
         });
+
+        highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString(); // Load the high score
     }
 
     private IEnumerator LoadSceneWithDelay(Loader.Scene scene) {
@@ -50,6 +53,7 @@ public class GameOverScript : MonoBehaviour
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
         if (score > highScore) {
             PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save(); // Save the new high score
             highScore = score;
             newHighScore.gameObject.SetActive(true); // Show the new high score text
             backGround.color = new Color32(248, 84, 233, 255); // Change background color to green
