@@ -115,6 +115,9 @@ public class PlayerScript : MonoBehaviour{
             }
             // Update the score for collecting a gem
             score += 2;
+            // Save the gems collected
+            PlayerPrefs.SetInt("Gems", PlayerPrefs.GetInt("Gems", 0) + 1);
+            PlayerPrefs.Save(); // Save the new gems
             OnGemPickup?.Invoke(this, EventArgs.Empty);
             // Update the score text
             if (scoreText != null) {
