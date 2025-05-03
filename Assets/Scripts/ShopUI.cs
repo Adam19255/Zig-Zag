@@ -13,6 +13,7 @@ public class ShopUI : MonoBehaviour {
         backButton.onClick.AddListener(() => {
             SoundManager.Instance.ButtonClickSound(); // Play the sound
             Hide(); // Hide the shop UI
+            MainMenuUI.Instance.Show(); // Show the main menu UI
         });
     }
 

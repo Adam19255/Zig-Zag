@@ -23,6 +23,7 @@ public class SettingsUI : MonoBehaviour
         backButton.onClick.AddListener(() => {
             SoundManager.Instance.ButtonClickSound(); // Play the sound
             Hide(); // Hide the settings UI
+            MainMenuUI.Instance.Show(); // Show the main menu UI
         });
     }
 

@@ -36,42 +36,45 @@ public class SoundManager : MonoBehaviour
     }
 
     private void PlayerScript_OnGameStart(object sender, EventArgs e) {
-        PlaySound(buttonClick, PlayerScript.Instance.transform.position);
+        PlaySound(buttonClick, PlayerScript.Instance.transform.position, false);
     }
 
     private void PlayerScript_OnPlayerMovement(object sender, EventArgs e) {
-        PlaySound(playerMovement, PlayerScript.Instance.transform.position);
+        PlaySound(playerMovement, PlayerScript.Instance.transform.position, false);
     }
 
     private void PlayerScript_OnPlayerDeath(object sender, EventArgs e) {
-        // Get the first child of the player (playerVisual)
-        Transform firstChild = PlayerScript.Instance.transform.GetChild(0);
-        if (firstChild != null) {
-            AudioSource audioSource = firstChild.GetComponent<AudioSource>();
-            if (audioSource != null) {
-                audioSource.PlayOneShot(playerDeath, volume);
-            }
-            else {
-                Debug.LogWarning("AudioSource not found on playerVisual!");
-            }
-        }
-        else {
-            Debug.LogWarning("Player has no first child to play death sound!");
-        }
+        PlaySound(playerDeath, PlayerScript.Instance.transform.position, true);
     }
+
 
 
     private void PlayerScript_OnGemPickup(object sender, EventArgs e) {
-        PlaySound(gemPickup, PlayerScript.Instance.transform.position);
+        PlaySound(gemPickup, PlayerScript.Instance.transform.position, false);
     }
 
     public void ButtonClickSound() {
-        PlaySound(buttonClick, Vector3.zero);
+        PlaySound(buttonClick, Vector3.zero, false);
     }
 
-    private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplier = 1f) {
-        AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
+    private void PlaySound(AudioClip audioClip, Vector3 position, bool playerDeath, float volumeMultiplier = 1f) {
+        GameObject tempAudioSource = new GameObject("TempAudio"); // Create a temporary GameObject to hold the AudioSource
+        tempAudioSource.transform.position = position; // Set the position of the temporary GameObject to the specified position
+
+        AudioSource audioSource = tempAudioSource.AddComponent<AudioSource>();
+        audioSource.clip = audioClip;
+        audioSource.volume = volumeMultiplier * volume;
+        if (playerDeath) {
+            audioSource.spatialBlend = 0.1f; // Reduce volume for player death sound
+        }
+        else { 
+            audioSource.spatialBlend = 0.5f; // Setting spatial blend to better simulate 2D sound
+        }
+        audioSource.Play();
+
+        Destroy(tempAudioSource, audioClip.length); // Destroy the GameObject after the sound has finished playing
     }
+
 
     public void ChangeVolume() {
         volume += 0.1f; // Increase volume by 0.1
