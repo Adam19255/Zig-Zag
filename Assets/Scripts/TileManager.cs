@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TileManager : MonoBehaviour {
 
@@ -19,7 +21,6 @@ public class TileManager : MonoBehaviour {
 
     private Color[] tileColors = new Color[10];
     private int currentColorIndexGlobal = -1;
-    private int currentColorTier = 0;
     private Color currentColor;
     private int lastAppliedTier = 0;
 

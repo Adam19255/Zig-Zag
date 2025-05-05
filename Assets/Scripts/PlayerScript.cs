@@ -26,6 +26,7 @@ public class PlayerScript : MonoBehaviour{
     public event EventHandler OnPlayerDeath;
     public event EventHandler OnGemPickup;
     public event EventHandler OnGameStart;
+    public event EventHandler On50Points;
 
     public static PlayerScript Instance { get; private set; }
 
@@ -73,6 +74,7 @@ public class PlayerScript : MonoBehaviour{
             // Update player speed
             if (score % 50 == 0 && speed < 30) {
                 speed += 1f; // Increase speed every 50 points
+                On50Points?.Invoke(this, EventArgs.Empty);
             }
             }
         else {

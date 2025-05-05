@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip playerDeath;
     [SerializeField] private AudioClip gemPickup;
     [SerializeField] private AudioClip buttonClick;
+    [SerializeField] private AudioClip tileColorChange;
 
     private float volume = 1f; // Default volume
 
@@ -33,6 +34,11 @@ public class SoundManager : MonoBehaviour
         PlayerScript.Instance.OnPlayerDeath += PlayerScript_OnPlayerDeath;
         PlayerScript.Instance.OnGemPickup += PlayerScript_OnGemPickup;
         PlayerScript.Instance.OnGameStart += PlayerScript_OnGameStart;
+        PlayerScript.Instance.On50Points += PlayerScript_On50Points;
+    }
+
+    private void PlayerScript_On50Points(object sender, EventArgs e) {
+        PlaySound(tileColorChange, PlayerScript.Instance.transform.position, false);
     }
 
     private void PlayerScript_OnGameStart(object sender, EventArgs e) {
@@ -55,6 +61,10 @@ public class SoundManager : MonoBehaviour
 
     public void ButtonClickSound() {
         PlaySound(buttonClick, Vector3.zero, false);
+    }
+
+    public void TileColorChangeSound() {
+        PlaySound(tileColorChange, Vector3.zero, false);
     }
 
     private void PlaySound(AudioClip audioClip, Vector3 position, bool playerDeath, float volumeMultiplier = 1f) {
