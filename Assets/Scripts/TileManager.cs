@@ -21,6 +21,9 @@ public class TileManager : MonoBehaviour {
 
     private Color[] tileColors = new Color[10];
     private int currentColorIndexGlobal = -1;
+    private List<Color> shuffledColorList = new List<Color>();
+    private int colorCycleIndex = 0;
+    private int currentColorTier = 0;
     private Color currentColor;
     private int lastAppliedTier = 0;
 
@@ -51,8 +54,10 @@ public class TileManager : MonoBehaviour {
     void Start() {
         SetupFixedColors();
 
-        currentColorIndexGlobal = Random.Range(0, tileColors.Length);
-        currentColor = tileColors[currentColorIndexGlobal];
+        shuffledColorList = new List<Color>(tileColors);
+        ShuffleColors(shuffledColorList);
+        colorCycleIndex = 0;
+        currentColor = shuffledColorList[colorCycleIndex];
 
         if (tileParent == null) {
             tileParent = new GameObject("TileParent").transform;
@@ -75,14 +80,13 @@ public class TileManager : MonoBehaviour {
         if (tier != lastAppliedTier && score >= 50) {
             lastAppliedTier = tier;
 
-            int newIndex;
-            do {
-                newIndex = Random.Range(0, tileColors.Length);
-            } while (newIndex == currentColorIndexGlobal);
+            colorCycleIndex++;
+            if (colorCycleIndex >= shuffledColorList.Count) {
+                ShuffleColors(shuffledColorList);
+                colorCycleIndex = 0;
+            }
 
-            currentColorIndexGlobal = newIndex;
-            currentColor = tileColors[currentColorIndexGlobal];
-
+            currentColor = shuffledColorList[colorCycleIndex];
             ApplyColorToRecentTiles(currentColor);
         }
     }
@@ -91,14 +95,13 @@ public class TileManager : MonoBehaviour {
         tileColors = new Color[] {
             Color.red,
             Color.green,
-            Color.blue,
-            Color.yellow,
-            Color.black,
+            Color.grey,
+            Color.white,
             Color.magenta,
             new Color(1f, 0.5f, 0f),           // orange
             new Color(0.5f, 0f, 1f),           // purple
             new Color(0f, 0.75f, 0.75f),       // teal
-            Color.gray
+            new Color(0.306f, 0.121f, 0f),     // brown
         };
     }
 
@@ -196,5 +199,14 @@ public class TileManager : MonoBehaviour {
         }
 
         mat.color = targetColor;
+    }
+
+    private void ShuffleColors(List<Color> list) {
+        for (int i = 0; i < list.Count; i++) {
+            Color temp = list[i];
+            int randomIndex = Random.Range(i, list.Count);
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
     }
 }
