@@ -109,9 +109,9 @@ public class TileManager : MonoBehaviour {
         for (int i = 0; i < amount; i++) {
             GameObject left = Instantiate(tilePrefabs[0], tileParent);
             GameObject top = Instantiate(tilePrefabs[1], tileParent);
-            left.name = "LeftTile";// Set the name of the tile to "LeftTile" in the stack
+            left.name = "LeftTile";
             top.name = "TopTile";
-            left.SetActive(false);// Deactivate the tile so it doesn't appear in the scene
+            left.SetActive(false);
             top.SetActive(false);
             leftTiles.Push(left);
             topTiles.Push(top);
