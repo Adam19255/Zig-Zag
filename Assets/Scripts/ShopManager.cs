@@ -26,12 +26,12 @@ public class ShopManager : MonoBehaviour
             GameObject obj = Instantiate(shopItemPrefab, shopGridParent);
 
             // UI References
-            RawImage preview = obj.transform.Find("SkinPreview").GetComponent<RawImage>();
-            TMP_Text buttonText = obj.transform.Find("BuyButton/BuyButtonText").GetComponent<TMP_Text>();
-            Button buyButton = obj.transform.Find("BuyButton").GetComponent<Button>();
-            Button previewButton = obj.transform.Find("SkinPreview").GetComponent<Button>();
+            RawImage preview = obj.transform.Find("ShopItem/SkinPreview").GetComponent<RawImage>();
+            TMP_Text buttonText = obj.transform.Find("ShopItem/BuyButtonText").GetComponent<TMP_Text>();
+            Button buyButton = obj.transform.Find("ShopItem").GetComponent<Button>();
+            Button previewButton = obj.transform.Find("ShopItem/SkinPreview").GetComponent<Button>();
             Image buttonImage = buyButton.GetComponent<Image>();
-            Image iconImage = obj.transform.Find("BuyButton/StateIcon").GetComponent<Image>();
+            Image iconImage = obj.transform.Find("ShopItem/BuyButtonText/StateIcon").GetComponent<Image>();
 
             // Setup visuals
             preview.texture = item.skinTexture;
