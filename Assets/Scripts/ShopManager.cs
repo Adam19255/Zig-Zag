@@ -36,7 +36,17 @@ public class ShopManager : MonoBehaviour
             // Setup visuals
             preview.texture = item.skinTexture;
 
-            item.isOwned = PlayerPrefs.GetInt("OwnedSkin_" + item.skinName, 0) == 1;
+            // Mark the default skin as owned automatically
+if (item.skinName == "C Lava")
+{
+    item.isOwned = true;
+    PlayerPrefs.SetInt("OwnedSkin_" + item.skinName, 1);
+}
+else
+{
+    item.isOwned = PlayerPrefs.GetInt("OwnedSkin_" + item.skinName, 0) == 1;
+}
+
             string equipped = PlayerPrefs.GetString("EquippedSkin", "");
 
             if (item.isOwned)
