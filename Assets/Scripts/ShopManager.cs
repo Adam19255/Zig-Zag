@@ -44,13 +44,12 @@ public class ShopManager : MonoBehaviour
                 if (item.skinName == equipped)
                 {
                     buttonText.text = "Equipped";
-                    buttonImage.color = new Color(0.9725f, 0.3294f, 0.9137f);
+                    buttonImage.color = new Color(0f, 0.792f, 1f);
                     iconImage.enabled = false;
                 }
                 else
                 {
                     buttonText.text = "Equip";
-                    buttonImage.color = new Color(0.2f, 0.4f, 1f);
                     iconImage.enabled = false;
                 }
             }
@@ -102,13 +101,12 @@ public class ShopManager : MonoBehaviour
                 if (isEquipped)
                 {
                     allButtonTexts[i].text = "Equipped";
-                    allButtonImages[i].color = new Color(0.9725f, 0.3294f, 0.9137f);
+                    allButtonImages[i].color = new Color(0f, 0.792f, 1f);
                     allIconImages[i].enabled = false;
                 }
                 else if (isOwned)
                 {
                     allButtonTexts[i].text = "Equip";
-                    allButtonImages[i].color = new Color(0.2f, 0.4f, 1f);
                     allIconImages[i].enabled = false;
                 }
                 else
