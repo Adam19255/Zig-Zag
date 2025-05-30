@@ -44,7 +44,7 @@ public class ShopManager : MonoBehaviour
                 if (item.skinName == equipped)
                 {
                     buttonText.text = "Equipped";
-                    buttonImage.color = Color.green;
+                    buttonImage.color = new Color(0.9725f, 0.3294f, 0.9137f);
                     iconImage.enabled = false;
                 }
                 else
@@ -88,8 +88,7 @@ public class ShopManager : MonoBehaviour
             PowerUpUI.Instance.UpdateGems(currentGems);
         }
 
-        if (item.isOwned)
-        {
+        if (item.isOwned) {
             // Equip skin
             PlayerPrefs.SetString("EquippedSkin", item.skinName);
             PlayerPrefs.Save();
@@ -102,7 +101,7 @@ public class ShopManager : MonoBehaviour
                 if (isEquipped)
                 {
                     allButtonTexts[i].text = "Equipped";
-                    allButtonImages[i].color = Color.green;
+                    allButtonImages[i].color = new Color(0.9725f, 0.3294f, 0.9137f);
                     allIconImages[i].enabled = false;
                 }
                 else if (isOwned)
@@ -117,12 +116,10 @@ public class ShopManager : MonoBehaviour
                     allButtonImages[i].color = Color.white;
                 }
             }
-
-            Debug.Log($"Equipped {item.skinName}");
         }
-        else
-        {
+        else {
             Debug.Log("Not enough gems!");
         }
+        SoundManager.Instance.ButtonClickSound();
     }
 }
