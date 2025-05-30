@@ -31,7 +31,7 @@ public class ShopManager : MonoBehaviour
             Button buyButton = obj.transform.Find("ShopItem").GetComponent<Button>();
             Button previewButton = obj.transform.Find("ShopItem/SkinPreview").GetComponent<Button>();
             Image buttonImage = buyButton.GetComponent<Image>();
-            Image iconImage = obj.transform.Find("ShopItem/BuyButtonText/StateIcon").GetComponent<Image>();
+            Image iconImage = obj.transform.Find("StateIcon").GetComponent<Image>();
 
             // Setup visuals
             preview.texture = item.skinTexture;
@@ -56,7 +56,7 @@ public class ShopManager : MonoBehaviour
             }
             else
             {
-                buttonText.text = $"{item.cost} x";
+                buttonText.text = $"{item.cost}x";
                 buttonImage.color = Color.white;
             }
 
@@ -86,6 +86,7 @@ public class ShopManager : MonoBehaviour
 
             item.isOwned = true;
             PowerUpUI.Instance.UpdateGems(currentGems);
+            SoundManager.Instance.ButtonClickSound();
         }
 
         if (item.isOwned) {
@@ -112,14 +113,14 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
-                    allButtonTexts[i].text = $"{allSkinItems[i].cost} x";
+                    allButtonTexts[i].text = $"{allSkinItems[i].cost}x";
                     allButtonImages[i].color = Color.white;
                 }
             }
+            SoundManager.Instance.ButtonClickSound();
         }
         else {
-            Debug.Log("Not enough gems!");
+            SoundManager.Instance.NoMoneySound();
         }
-        SoundManager.Instance.ButtonClickSound();
     }
 }

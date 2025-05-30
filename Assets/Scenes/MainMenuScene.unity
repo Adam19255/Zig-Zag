@@ -1588,6 +1588,7 @@ MonoBehaviour:
   playerDeath: {fileID: 8300000, guid: c18fa4b054afe374b973574b2229bf04, type: 3}
   gemPickup: {fileID: 8300000, guid: 1891974e977a71640b2be32b6e7f1f58, type: 3}
   buttonClick: {fileID: 8300000, guid: 4930fc6c326cada4fab2da2dcf710a73, type: 3}
+  noMoney: {fileID: 8300000, guid: 6325b93a582f75d498fac48ac2e2073f, type: 3}
   tileColorChange: {fileID: 8300000, guid: bd84dd323266f644eae5459c38ea13c6, type: 3}
 --- !u!4 &1016349910
 Transform:
@@ -2456,10 +2457,10 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 220, y: 260}
+  m_CellSize: {x: 150, y: 170}
   m_Spacing: {x: 40, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 8
 --- !u!222 &1578463931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3001,6 +3002,11 @@ MonoBehaviour:
     type: 3}
   shopGridParent: {fileID: 1578463928}
   skinItems:
+  - skinName: C Lava
+    skinTexture: {fileID: 2800000, guid: 2548d97419902a6498f390bc5798c318, type: 3}
+    tier: Common
+    cost: 50
+    isOwned: 0
   - skinName: Tile 1
     skinTexture: {fileID: 2800000, guid: f5956e835ea243744a9fc80cbebe7bdf, type: 3}
     tier: Common
@@ -3018,11 +3024,6 @@ MonoBehaviour:
     isOwned: 0
   - skinName: C
     skinTexture: {fileID: 2800000, guid: 50ddeaf8336ed2d49bb19d723717db8b, type: 3}
-    tier: Common
-    cost: 50
-    isOwned: 0
-  - skinName: C Lava
-    skinTexture: {fileID: 2800000, guid: 2548d97419902a6498f390bc5798c318, type: 3}
     tier: Common
     cost: 50
     isOwned: 0

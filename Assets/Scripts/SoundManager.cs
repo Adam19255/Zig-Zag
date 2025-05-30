@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip playerDeath;
     [SerializeField] private AudioClip gemPickup;
     [SerializeField] private AudioClip buttonClick;
+    [SerializeField] private AudioClip noMoney;
     [SerializeField] private AudioClip tileColorChange;
 
     private float volume = 1f; // Default volume
@@ -53,14 +54,16 @@ public class SoundManager : MonoBehaviour
         PlaySound(playerDeath, PlayerScript.Instance.transform.position, true);
     }
 
-
-
     private void PlayerScript_OnGemPickup(object sender, EventArgs e) {
         PlaySound(gemPickup, PlayerScript.Instance.transform.position, false);
     }
 
     public void ButtonClickSound() {
         PlaySound(buttonClick, Vector3.zero, false);
+    }
+
+    public void NoMoneySound() {
+        PlaySound(noMoney, Vector3.zero, false);
     }
 
     public void TileColorChangeSound() {

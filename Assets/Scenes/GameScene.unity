@@ -2465,6 +2465,7 @@ MonoBehaviour:
   playerDeath: {fileID: 8300000, guid: c18fa4b054afe374b973574b2229bf04, type: 3}
   gemPickup: {fileID: 8300000, guid: 1891974e977a71640b2be32b6e7f1f58, type: 3}
   buttonClick: {fileID: 8300000, guid: 4930fc6c326cada4fab2da2dcf710a73, type: 3}
+  noMoney: {fileID: 8300000, guid: 6325b93a582f75d498fac48ac2e2073f, type: 3}
   tileColorChange: {fileID: 8300000, guid: bd84dd323266f644eae5459c38ea13c6, type: 3}
 --- !u!4 &2121347454
 Transform:
