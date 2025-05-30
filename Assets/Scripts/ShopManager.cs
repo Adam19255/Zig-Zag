@@ -50,6 +50,7 @@ public class ShopManager : MonoBehaviour
                 else
                 {
                     buttonText.text = "Equip";
+                    buttonImage.color = new Color(0.9725f, 0.3294f, 0.9137f);
                     iconImage.enabled = false;
                 }
             }
@@ -107,6 +108,7 @@ public class ShopManager : MonoBehaviour
                 else if (isOwned)
                 {
                     allButtonTexts[i].text = "Equip";
+                    allButtonImages[i].color = new Color(0.9725f, 0.3294f, 0.9137f);
                     allIconImages[i].enabled = false;
                 }
                 else
