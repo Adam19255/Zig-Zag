@@ -20,10 +20,8 @@ public class TileManager : MonoBehaviour {
     private int topTileCount = 0;
 
     private Color[] tileColors = new Color[10];
-    private int currentColorIndexGlobal = -1;
     private List<Color> shuffledColorList = new List<Color>();
     private int colorCycleIndex = 0;
-    private int currentColorTier = 0;
     private Color currentColor;
     private int lastAppliedTier = 0;
 

@@ -25,3 +25,4 @@ public class PowerUpUI : MonoBehaviour
         PlayerPrefs.Save(); // Ensure the changes are saved
     }
 }
+
