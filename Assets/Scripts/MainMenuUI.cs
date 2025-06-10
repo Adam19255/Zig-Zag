@@ -32,6 +32,8 @@ public class MainMenuUI : MonoBehaviour {
             SoundManager.Instance.ButtonClickSound(); // Play the sound
             QuitGame();
         });
+
+        Time.timeScale = 1.0f;
     }
 
     private IEnumerator LoadSceneWithDelay(Loader.Scene scene) {

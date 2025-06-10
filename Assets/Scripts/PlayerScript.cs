@@ -30,6 +30,8 @@ public class PlayerScript : MonoBehaviour {
     public event EventHandler OnGemPickup;
     public event EventHandler OnGameStart;
     public event EventHandler On50Points;
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameUnpaused;
 
     public static PlayerScript Instance { get; private set; }
 
@@ -173,13 +175,15 @@ public class PlayerScript : MonoBehaviour {
         return score;
     }
 
-    private void TogglePauseGame() {
+    public void TogglePauseGame() {
         isGamePaused = !isGamePaused; // Set the game to paused state
         if (isGamePaused) {
             Time.timeScale = 0f; // Pause the game
+            OnGamePaused?.Invoke(this, EventArgs.Empty);
         }
         else {
             Time.timeScale = 1f; // Resume the game
+            OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         }
     }
 }
