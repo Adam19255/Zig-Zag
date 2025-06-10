@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using TMPro;
 
 public class SoundManager : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip noMoney;
     [SerializeField] private AudioClip tileColorChange;
     [SerializeField] private Slider volumeSlider;
+    [SerializeField] private TextMeshProUGUI volumeLabel;
 
     private AudioSource audioSource; // Main AudioSource for UI sounds
     private float volume = 1f; // Default volume
@@ -48,6 +51,8 @@ public class SoundManager : MonoBehaviour
             entry.callback.AddListener((data) => { OnSliderReleased(); });
             trigger.triggers.Add(entry);
         }
+
+        UpdateVolumeLabel(); // Update the volume label text
     }
 
     private IEnumerator Start() {
@@ -117,6 +122,8 @@ public class SoundManager : MonoBehaviour
 
         // Update the AudioSource volume
         audioSource.volume = volume;
+
+        UpdateVolumeLabel(); // Update the volume label text
     }
 
     private void OnSliderReleased() {
@@ -125,5 +132,11 @@ public class SoundManager : MonoBehaviour
 
     public float GetVolume() {
         return volume; // Return the current volume
+    }
+
+    private void UpdateVolumeLabel() {
+        if (volumeLabel != null) {
+            volumeLabel.text = $"Volume: {Mathf.RoundToInt(volume * 100)}";
+        }
     }
 }
