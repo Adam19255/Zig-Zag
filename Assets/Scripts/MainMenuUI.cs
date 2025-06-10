@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class MainMenuUI : MonoBehaviour {
     public static MainMenuUI Instance { get; private set; } // Singleton instance
@@ -29,7 +30,7 @@ public class MainMenuUI : MonoBehaviour {
         });
         quitButton.onClick.AddListener(() => {
             SoundManager.Instance.ButtonClickSound(); // Play the sound
-            Application.Quit();
+            QuitGame();
         });
     }
 
@@ -40,6 +41,17 @@ public class MainMenuUI : MonoBehaviour {
         yield return new WaitForSeconds(sceneLoadDelay);
         // Load the scene
         Loader.Load(scene);
+    }
+
+    private void QuitGame() {
+        if (Application.isEditor) {
+            // If we're in the Unity Editor, stop playing
+            EditorApplication.isPlaying = false;
+        }
+        else {
+            // If we're in a built application, quit the application
+            Application.Quit();
+        }
     }
 
     public void Show() {

@@ -22,6 +22,8 @@ public class PlayerScript : MonoBehaviour {
     private bool isDead = false;
     private bool isGameStarted = false;
 
+    private AudioSource playerAudioSource; // AudioSource for player sounds
+
     public event EventHandler OnPlayerMovement;
     public event EventHandler OnPlayerDeath;
     public event EventHandler OnGemPickup;
@@ -35,7 +37,12 @@ public class PlayerScript : MonoBehaviour {
             Instance = this;
         }
 
-        ApplyEquippedSkin(); // NEW
+        // Add AudioSource component for player sounds
+        playerAudioSource = gameObject.AddComponent<AudioSource>();
+        playerAudioSource.spatialBlend = 0.5f; // 2D/3D blend for positional audio
+        playerAudioSource.playOnAwake = false;
+
+        ApplyEquippedSkin();
     }
 
     private void ApplyEquippedSkin() {
@@ -129,6 +136,23 @@ public class PlayerScript : MonoBehaviour {
         }
 
         return false;
+    }
+
+    // Public method for SoundManager to play sounds on the player
+    public void PlayPlayerSound(AudioClip audioClip, float volume, bool isDeathSound = false) {
+        if (audioClip != null && playerAudioSource != null) {
+            playerAudioSource.volume = volume;
+
+            // Adjust spatial blend for death sound
+            if (isDeathSound) {
+                playerAudioSource.spatialBlend = 0.1f; // More 2D for death sound
+            }
+            else {
+                playerAudioSource.spatialBlend = 0.5f; // Default 2D/3D blend
+            }
+
+            playerAudioSource.PlayOneShot(audioClip);
+        }
     }
 
     public int GetScore() {

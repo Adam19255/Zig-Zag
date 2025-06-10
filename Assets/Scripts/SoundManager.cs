@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SoundManager : MonoBehaviour
 {
@@ -13,15 +15,39 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip buttonClick;
     [SerializeField] private AudioClip noMoney;
     [SerializeField] private AudioClip tileColorChange;
+    [SerializeField] private Slider volumeSlider;
 
+    private AudioSource audioSource; // Main AudioSource for UI sounds
     private float volume = 1f; // Default volume
 
     private void Awake() {
         // Set this as the singleton instance
         Instance = this;
 
+        // Add AudioSource component for UI sounds
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 0f; // 2D sound for UI
+        audioSource.playOnAwake = false;
+
         // Load the volume from PlayerPrefs
         volume = PlayerPrefs.GetFloat("Volume", 1f); // Default volume is 1 if not set
+
+        // Set up the volume slider
+        if (volumeSlider != null) {
+            volumeSlider.value = volume; // Set the slider to the current volume
+            volumeSlider.onValueChanged.AddListener(OnVolumeChanged); // Add listener for slider changes
+
+            // Add event trigger for when the slider is released
+            EventTrigger trigger = volumeSlider.gameObject.GetComponent<EventTrigger>();
+            if (trigger == null) {
+                trigger = volumeSlider.gameObject.AddComponent<EventTrigger>();
+            }
+
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerUp;
+            entry.callback.AddListener((data) => { OnSliderReleased(); });
+            trigger.triggers.Add(entry);
+        }
     }
 
     private IEnumerator Start() {
@@ -39,65 +65,62 @@ public class SoundManager : MonoBehaviour
     }
 
     private void PlayerScript_On50Points(object sender, EventArgs e) {
-        PlaySound(tileColorChange, PlayerScript.Instance.transform.position, false);
+        // Play tile color change sound on player
+        PlayerScript.Instance.PlayPlayerSound(tileColorChange, volume);
     }
 
     private void PlayerScript_OnGameStart(object sender, EventArgs e) {
-        PlaySound(buttonClick, PlayerScript.Instance.transform.position, false);
+        // Play button click sound on player
+        PlayerScript.Instance.PlayPlayerSound(buttonClick, volume);
     }
 
     private void PlayerScript_OnPlayerMovement(object sender, EventArgs e) {
-        PlaySound(playerMovement, PlayerScript.Instance.transform.position, false);
+        // Play movement sound on player
+        PlayerScript.Instance.PlayPlayerSound(playerMovement, volume);
     }
 
     private void PlayerScript_OnPlayerDeath(object sender, EventArgs e) {
-        PlaySound(playerDeath, PlayerScript.Instance.transform.position, true);
+        // Play death sound on player with reduced spatial blend
+        PlayerScript.Instance.PlayPlayerSound(playerDeath, volume, true);
     }
 
     private void PlayerScript_OnGemPickup(object sender, EventArgs e) {
-        PlaySound(gemPickup, PlayerScript.Instance.transform.position, false);
+        // Play gem pickup sound on player
+        PlayerScript.Instance.PlayPlayerSound(gemPickup, volume);
     }
 
     public void ButtonClickSound() {
-        PlaySound(buttonClick, Vector3.zero, false);
+        PlayUISound(buttonClick);
     }
 
     public void NoMoneySound() {
-        PlaySound(noMoney, Vector3.zero, false);
+        PlayUISound(noMoney);
     }
 
     public void TileColorChangeSound() {
-        PlaySound(tileColorChange, Vector3.zero, false);
+        PlayUISound(tileColorChange);
     }
 
-    private void PlaySound(AudioClip audioClip, Vector3 position, bool playerDeath, float volumeMultiplier = 1f) {
-        GameObject tempAudioSource = new GameObject("TempAudio"); // Create a temporary GameObject to hold the AudioSource
-        tempAudioSource.transform.position = position; // Set the position of the temporary GameObject to the specified position
-
-        AudioSource audioSource = tempAudioSource.AddComponent<AudioSource>();
-        audioSource.clip = audioClip;
-        audioSource.volume = volumeMultiplier * volume;
-        if (playerDeath) {
-            audioSource.spatialBlend = 0.1f; // Reduce volume for player death sound
+    // Method for playing UI sounds through SoundManager's AudioSource
+    private void PlayUISound(AudioClip audioClip, float volumeMultiplier = 1f) {
+        if (audioClip != null && audioSource != null) {
+            audioSource.volume = volumeMultiplier * volume;
+            audioSource.PlayOneShot(audioClip);
         }
-        else { 
-            audioSource.spatialBlend = 0.5f; // Setting spatial blend to better simulate 2D sound
-        }
-        audioSource.Play();
-
-        Destroy(tempAudioSource, audioClip.length); // Destroy the GameObject after the sound has finished playing
     }
 
-
-    public void ChangeVolume() {
-        volume += 0.1f; // Increase volume by 0.1
-        if (volume > 1f) {
-            volume = 0f; // Reset volume to 0 if it exceeds 1
-        }
-
-        // Save the volume to PlayerPrefs
-        PlayerPrefs.SetFloat("Volume", volume);
+    // This method is called whenever the slider value changes
+    private void OnVolumeChanged(float newValue) {
+        volume = newValue; // Update the volume
+        PlayerPrefs.SetFloat("Volume", volume); // Save the volume to PlayerPrefs
         PlayerPrefs.Save(); // Save the changes
+
+        // Update the AudioSource volume
+        audioSource.volume = volume;
+    }
+
+    private void OnSliderReleased() {
+        PlayUISound(buttonClick);
     }
 
     public float GetVolume() {
