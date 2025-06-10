@@ -9,7 +9,6 @@ public class SettingsUI : MonoBehaviour
     public static SettingsUI Instance { get; private set; } // Singleton instance
 
     [SerializeField] private Button backButton;
-    [SerializeField] private TextMeshProUGUI soundEffectText;
 
     private void Awake() {
         Instance = this; // Set the singleton instance

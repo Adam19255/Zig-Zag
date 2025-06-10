@@ -21,6 +21,7 @@ public class PlayerScript : MonoBehaviour {
     private float rotationSpeed = 20f;
     private bool isDead = false;
     private bool isGameStarted = false;
+    private bool isGamePaused = false;
 
     private AudioSource playerAudioSource; // AudioSource for player sounds
 
@@ -45,6 +46,14 @@ public class PlayerScript : MonoBehaviour {
         ApplyEquippedSkin();
     }
 
+    private void Start() {
+        GameInput.Instance.OnPauseGame += GameInput_OnPauseAction;
+    }
+
+    private void GameInput_OnPauseAction(object sender, EventArgs e) {
+        TogglePauseGame();
+    }
+
     private void ApplyEquippedSkin() {
         string equippedSkin = PlayerPrefs.GetString("EquippedSkin", "");
         if (!string.IsNullOrEmpty(equippedSkin)) {
@@ -63,6 +72,12 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void Update() {
+        gameInput.Pause(); // Check for pause input
+
+        if (isGamePaused) {
+            return;
+        }
+
         if (!IsGrounded()) {
             if (mainCamera != null) mainCamera.parent = null;
             if (spotLight != null) spotLight.transform.parent = null;
@@ -114,7 +129,6 @@ public class PlayerScript : MonoBehaviour {
             int gems = PlayerPrefs.GetInt("Gems", 0) + 1;
             PlayerPrefs.SetInt("Gems", gems);
             PlayerPrefs.Save();
-            PowerUpUI.Instance.UpdateGems(gems);
             OnGemPickup?.Invoke(this, EventArgs.Empty);
             if (scoreText != null) scoreText.text = score.ToString();
         }
@@ -157,5 +171,15 @@ public class PlayerScript : MonoBehaviour {
 
     public int GetScore() {
         return score;
+    }
+
+    private void TogglePauseGame() {
+        isGamePaused = !isGamePaused; // Set the game to paused state
+        if (isGamePaused) {
+            Time.timeScale = 0f; // Pause the game
+        }
+        else {
+            Time.timeScale = 1f; // Resume the game
+        }
     }
 }
